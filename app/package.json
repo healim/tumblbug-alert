@@ -1,0 +1,17 @@
+{
+  "name": "tumblbug-alert",
+  "version": "1.0.0",
+  "description": "텀블벅에서 선착순 마감된 프로젝트에 빈 자리(취소자)가 생기면 알려주는 기능",
+  "author": "healim",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^6.0.0",
+    "nodemon": "^1.18.4",
+    "slackbots": "^1.1.0"
+  }
+}
