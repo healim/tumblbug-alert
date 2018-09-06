@@ -6,6 +6,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "postinstall": "cd app && yarn install",
     "start": "nodemon index.js"
   },
   "dependencies": {
