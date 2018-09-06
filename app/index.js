@@ -4,6 +4,9 @@ const express = require('express')
 
 const app = express()
 app.set('port', process.env.PORT || 5000)
+app.get('/', (res, req) => {
+  res.body = "슬랙 봇 실행중"
+})
 app.listen(process.env.PORT || port)
 
 require('dotenv').config()

@@ -55,4 +55,13 @@
     - 유튜브 튜토리얼 보고 만들었다. 생각보다 어렵지 않다
     - 튜토리얼 이외에 아래 내용 적용
       - dotenv(환경변수 설정), nodemon(서버 자동 재시작), heroku(배포)
-    
+      
+- 배포 오류 > 해결
+  - heroku에서 배포하려는데 오류 발생 신난다~ ^~^
+  - `$ heroku logs --tail` 치면 서버 로그 볼 수 있는데 어떤 상태인지 실시간으로 확인하기 좋다. 여기서 보고 에러 고치면 좋음
+    - `Node.js: package.json not found in application root`
+      - 해결 : https://github.com/heroku/heroku-buildpack-nodejs/issues/323
+    - 배포는 되는데 얼마 안 지나서 crash 발생
+      - 해결 : https://github.com/egoist/vuepack/issues/145
+      - express로 서버 만들어주고, port 설정해줌
+      - heroku에도 환경변수 등록해줌 (`heroku config:set [내용]` 또는 홈페이지에서 등록
