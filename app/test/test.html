@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+</head>
+
+<body>
+  <input id="state" name="state" type="text" /><br />
+
+  <script>
+    /**
+    * 자리 생겼는지 모니터링 할 때 interval 사용하려고 함 
+    * 
+    */
+    // 변경된 내역을 추적할 엘리먼트를 가져온다.
+    // 여기선 바뀐거 바로 확인할 수 있게 HTML에 input 사용했음
+    const targetElement = document.getElementById("state")
+
+    // 해당 엘리먼트에 리스너를 등록한다. 
+    targetElement.addEventListener("change", (e) => {
+      monitoring(e.target.value)
+    })
+
+    // 모니터링 함수
+    let intervalId = ""
+
+    function monitoring(stateValue) {
+      let state = stateValue
+
+      if (state === "자리 남음") {
+        if (intervalId !== "") {
+          clearInterval(intervalId)
+        }
+        console.log("이제 구매할 때!")
+
+      } else if (state === "선착순 마감") {
+        intervalId = setInterval(() => {
+          console.log("아직 때가 아닙니다 ㅜㅜ")
+        }, 1000)
+      } else if (state === "") {
+        if (intervalId !== "") {
+          clearInterval(intervalId)
+        }
+        console.log("선착순 해당 없음")
+      }
+    }
+  </script>
+</body>
+
+</html>
