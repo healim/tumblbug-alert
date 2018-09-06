@@ -65,3 +65,13 @@
       - 해결 : https://github.com/egoist/vuepack/issues/145
       - express로 서버 만들어주고, port 설정해줌
       - heroku에도 환경변수 등록해줌 (`heroku config:set [내용]` 또는 홈페이지에서 등록
+
+- API 요청 컨트롤러 분리
+  - 비동기 어떻게 쓰는지 이해를 잘 못해서 `undefined` 고비가 있었으나 ㅜㅜ 
+    - 오류 내용 정리 : https://gist.github.com/healim/0d7f97e2a5d0428c1b27b771b2a16f50
+  - 다행히 해결함
+    - 컨트롤러 호출하는 부분에만 비동기를 썼는데
+    - 컨트롤러에 비동기, `async/await` 써야하는거였다
+    - axios `.then()`에서 `async/await`으로 바꾼 김에 `try/catch`도 적용함
+  - QQ. 비동기는 테스트/디버깅을 어떻게 해야 하는지 찾아보기
+  - QQ. 비동기 이해도 높이기

@@ -1,15 +1,20 @@
-const SlackBot = require('slackbots')
-const axios = require('axios')
-const express = require('express')
-
-const app = express()
-app.set('port', process.env.PORT || 5000)
-app.get('/', (req, res) => {
-  res.send('슬랙봇 실행중')
-})
-app.listen(process.env.PORT || port)
+'use strict'
 
 require('dotenv').config()
+
+const SlackBot = require('slackbots')
+const axios = require('axios')
+const Koa = require('koa')
+
+// 서버 설정
+const app = new Koa()
+const port = process.env.PORT || 5000
+app.use(async ctx => { // 웹에서 heroku 배포 url 접속시 표시할 내용
+  ctx.body = '슬랙봇 실행중'
+})
+app.listen(port, () => {
+  console.log(`listening on ${port}`)
+})
 
 // 봇 초기화
 const bot = new SlackBot({
@@ -17,16 +22,17 @@ const bot = new SlackBot({
   name: 'tumblert'
 })
 
-// 스타트 핸들러 
+// 시작 핸들러
 bot.on('start', () => {
   const params = {
     icon_emoji: ':money_with_wings:'
   }
 
   bot.postMessageToChannel(
-    'general', 
-    '비나이다, 비나이다, 굿즈 하나만 던져주십사ㅜㅜ @tumblert',
-    params)
+    'general',
+    '비나이다, 비나이다, 펀딩 한 자리만 던져주십사..! @tumblert',
+    params
+  )
 })
 
 // Error Handler
@@ -43,55 +49,37 @@ bot.on('message', (data) => {
   handleMessage(data.text)
 })
 
+// 컨트롤러 불러오기
+const ctrl = require('./controller')
+
 // Response to Data
-function handleMessage (message) {
+async function handleMessage (message) {
   if(message.includes(' chucknorris')) {
-    chuckJoke()
+    const params = {
+      icon_emoji: ':laughing:'
+    }
+
+    const joke = await ctrl.chuckJoke()
+    await bot.postMessageToChannel(
+      'general',
+      `Chuck Norris : ${joke}`,
+      params
+    )
+
   } else if (message.includes(' yomama')) {
-    yoMamaJoke()
+    const params = {
+      icon_emoji: ':laughing:'
+    }
+
+    const joke = await ctrl.yomamaJoke()
+    await bot.postMessageToChannel(
+      'general',
+      `yomama : ${joke}`,
+      params
+    )
   } else if (message.includes(' help')) {
     runHelp()
   }
-}
-
-// Tell a Chuck Norris Joke
-function chuckJoke () {
-  const url = "http://api.icndb.com/jokes/random"
-  axios.get(url)
-    .then(res => {
-      const joke = res.data.value.joke
-      
-      const params = {
-        icon_emoji: ':laughing:'
-      }
-
-      bot.postMessageToChannel(
-        'general',
-        `Chuck Norris : ${joke}`,
-        params
-      )
-
-    })
-}
-
-// Tell a yoMamaJoke
-function yoMamaJoke () {
-  const url = "https://api.yomomma.info/"
-  axios.get(url)
-    .then(res => {
-      const joke = res.data.joke
-
-      const params = {
-        icon_emoji: ':laughing:'
-      }
-
-      bot.postMessageToChannel(
-        'general',
-        `yoMama : ${joke}`,
-        params
-      )
-
-    })
 }
 
 // show help text
