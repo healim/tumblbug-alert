@@ -75,3 +75,15 @@
     - axios `.then()`에서 `async/await`으로 바꾼 김에 `try/catch`도 적용함
   - QQ. 비동기는 테스트/디버깅을 어떻게 해야 하는지 찾아보기
   - QQ. 비동기 이해도 높이기
+
+- 배포 중지(?)
+ - 아침에 보니 봇이 꺼져있음
+ - 근데 heroku 로그에는 충돌 났다거나 종료된 내용이 없다.
+ - 요청 없으면 일시정지 시켰다가, 요청 들어올 때 재시작? 하는 식으로 heroku 서버 동작하나? 
+  - 꼭 그런 것 같지도 않는데, 위 같은 경우면 아침에 메시지 보냈을 때 켜졌어야 함, 게다가 로그는 남아야 하는데 없음(=heroku는 문제 없음) 
+    - 아니면 웹으로 요청 들어올 때랑 봇으로 요청 들어올 때랑 다른가?
+      - 아 봇도 Koa 인스턴스 app에서 요청 받을 수 있게 설정 해줘야하는데 내가 안 해줘서 그럴지도..!
+- 참고
+  - https://blog.heroku.com/how-to-deploy-your-slack-bots-to-heroku
+  - https://girliemac.com/blog/2016/10/24/slack-command-bot-nodejs/
+  - https://api.slack.com/incoming-webhooks
